@@ -11,6 +11,6 @@ public class Main {
         arvoreBinaria.inserir(42);
         arvoreBinaria.inserir(67);
         arvoreBinaria.inserir(122);
-        arvoreBinaria.exibir("Em");
+        arvoreBinaria.menu();
     }
 }

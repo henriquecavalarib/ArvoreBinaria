@@ -1,3 +1,5 @@
+import java.util.Scanner;
+
 public class ArvoreBinaria {
     No raiz;
 
@@ -67,16 +69,18 @@ public class ArvoreBinaria {
         }
     }
 
-    public void exibir(String percurso) {
-        switch(percurso){
-            case("Pre"):
-                preOrdem(this.raiz);
-                break;
-            case("Em"):
-                emOrdem(this.raiz);
-                break;
-            case("Pos"):
-                posOrdem(this.raiz);
+    public void menu() {
+        Scanner sc =  new Scanner(System.in);
+
+        System.out.println("1 - Exibir");
+        System.out.println("2 - Remover");
+
+        System.out.print("R: ");
+        int opcao = sc.nextInt();
+
+        switch(opcao){
+            case 1:
+                exibir();
                 break;
         }
 
@@ -109,13 +113,47 @@ public class ArvoreBinaria {
         System.out.println(no.getConteudo());
     }
 
-    private void RemoverNo(No no){
-        No NoRemover = no;
-        if(no == null){
-            return;
+    public void exibir(){
+        Scanner sc = new Scanner(System.in);
 
+        System.out.println("1 - PosOrdem");
+        System.out.println("2 - EmOrdem");
+        System.out.println("3 - PreOrdem");
+
+        int percurso = 0;
+
+        System.out.print("R: ");
+        percurso  = sc.nextInt();
+
+        switch (percurso) {
+            case 1:
+                posOrdem(this.raiz);
+                break;
+            case 2:
+                emOrdem(this.raiz);
+                break;
+            case 3:
+                preOrdem(this.raiz );
+                break;
+        
+            default:
+                break;
         }
 
-        for(int i = 0; i < )
+
+
+        
+    }
+
+    private void RemoverNo(No no){
+        No aux;
+        aux = no;
+
+        if(aux.getConteudo().equals(null)){
+            return;
+        }
+        
+        
+
     }
 }
