@@ -116,6 +116,16 @@ public class ArvoreBinaria {
 
         }
 
-        for(int i = 0; i < )
+        while(NoRemover != null){
+            if(NoRemover.getEsquerda().equals(null))
+                NoRemover = NoRemover.getDireita();
+            elif(NoRemover.getEsquerda() == NoRemover){
+                if(NoRemover.getDireita() > NoRemover.getEsquerda()){
+                    NoRemover = NoRemover.getDireita();
+                }else{
+                    NoRemover = NoRemover.getEsquerda();
+                }
+            }
+        }
     }
 }
