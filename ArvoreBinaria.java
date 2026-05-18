@@ -7,8 +7,7 @@ public class ArvoreBinaria {
 
     public void inserir(Integer conteudo) {
         No novoNo = new No(conteudo);
-        //inserirRecursivo(novoNo, this.raiz);
-        inserirIterativo(novoNo);
+        inserirRecursivo(novoNo, this.raiz);
     }
     private void inserirRecursivo(No no, No atual) {
         if(estaVazia()) {
@@ -30,33 +29,6 @@ public class ArvoreBinaria {
                 inserirRecursivo(no, atual.getEsquerda());
             }
         }
-    }
-
-    private void inserirIterativo(No no) {
-        if(estaVazia()) {
-            this.raiz = no;
-            return;
-        } else {
-            No aux = this.raiz;
-            while(aux != null) {
-                if(no.getConteudo() > aux.getConteudo()) {
-                    if(aux.getDireita() == null) {
-                        aux.setDireita(no);
-                        return;
-                    } else {
-                        aux = aux.getDireita();
-                    }
-                } else {
-                    if(aux.getEsquerda() == null) {
-                        aux.setEsquerda(no);
-                        return;
-                    } else {
-                        aux = aux.getEsquerda();
-                    }
-                }
-            }
-        }
-
     }
 
     public boolean estaVazia() {
@@ -109,23 +81,47 @@ public class ArvoreBinaria {
         System.out.println(no.getConteudo());
     }
 
-    private void RemoverNo(No no){
-        No NoRemover = no;
-        if(no == null){
+    public void remover(Integer conteudo) {
+        if (estaVazia()) {
             return;
+        }
+        this.raiz = removerRecursivo(this.raiz, conteudo);
 
+        // Mantém a consistência do estado "vazio" definido no construtor da classe
+        if (this.raiz == null) {
+            this.raiz = new No(null);
+        }
+    }
+
+    private No removerRecursivo(No atual, Integer conteudo) {
+        if (atual == null || atual.getConteudo() == null) {
+            return null;
         }
 
-        while(NoRemover != null){
-            if(NoRemover.getEsquerda().equals(null))
-                NoRemover = NoRemover.getDireita();
-            elif(NoRemover.getEsquerda() == NoRemover){
-                if(NoRemover.getDireita() > NoRemover.getEsquerda()){
-                    NoRemover = NoRemover.getDireita();
-                }else{
-                    NoRemover = NoRemover.getEsquerda();
-                }
+        if (conteudo < atual.getConteudo()) {
+            atual.setEsquerda(removerRecursivo(atual.getEsquerda(), conteudo));
+        } else if (conteudo > atual.getConteudo()) {
+            atual.setDireita(removerRecursivo(atual.getDireita(), conteudo));
+        } else {
+           
+            if (atual.getEsquerda() == null) {
+                return atual.getDireita();
+            } else if (atual.getDireita() == null) {
+                return atual.getEsquerda();
             }
+
+          
+            No sucessor = encontrarMinimo(atual.getDireita());
+            atual.setConteudo(sucessor.getConteudo());
+            atual.setDireita(removerRecursivo(atual.getDireita(), sucessor.getConteudo()));
         }
+        return atual;
+    }
+
+    private No encontrarMinimo(No no) {
+        while (no.getEsquerda() != null) {
+            no = no.getEsquerda();
+        }
+        return no;
     }
 }
